@@ -1,0 +1,19 @@
+name: Build Mobile Game APK
+on: [push, workflow_dispatch]
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Files
+        uses: actions/checkout@v4
+      - name: Build Android APK
+        uses: simonlemay/godot-export@v5
+        with:
+          godot_version: 4.3
+          platform: android
+          export_preset: Android
+      - name: Save APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: game-apk
+          path: ./*.apk
