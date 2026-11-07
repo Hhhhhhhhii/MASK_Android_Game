@@ -7,7 +7,7 @@ jobs:
       - name: Checkout Source Files
         uses: actions/checkout@v4
       - name: Build Android APK
-        uses: simonlemay/godot-export@v5
+        uses: firebelley/godot-export@v6.0.0
         with:
           godot_version: 4.3
           platform: android
@@ -17,3 +17,4 @@ jobs:
         with:
           name: game-apk
           path: ./*.apk
+          
