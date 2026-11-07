@@ -6,6 +6,10 @@ jobs:
     steps:
       - name: Checkout Source Files
         uses: actions/checkout@v4
+      - name: Fix loose script paths
+        run: |
+          sed -i 's|res://scripts/|res://|g' main.tscn || true
+          sed -i 's|res://scripts/|res://|g' *.gd || true
       - name: Build Android APK
         uses: firebelley/godot-export@v6.0.0
         with:
