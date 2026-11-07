@@ -6,16 +6,30 @@ jobs:
     steps:
       - name: Checkout Source Files
         uses: actions/checkout@v4
+
+      - name: Setup Android SDK Environment
+        uses: android-actions/setup-android@v3
+
+      - name: Download Godot Headless Engine
+        run: |
+          wget https://github.com
+          unzip Godot_v4.3-stable_linux.x86_64.zip
+          mv Godot_v4.3-stable_linux.x86_64 godot
+
+          wget https://github.com
+          unzip Godot_v4.3-stable_export_templates.tpz
+          mkdir -p ~/.local/share/godot/export_templates/4.3.stable
+          mv templates/* ~/.local/share/godot/export_templates/4.3.stable/
+
       - name: Fix loose script paths
         run: |
           sed -i 's|res://scripts/|res://|g' main.tscn || true
           sed -i 's|res://scripts/|res://|g' *.gd || true
-      - name: Build Android APK
-        uses: firebelley/godot-export@v6.0.0
-        with:
-          godot_version: 4.3
-          platform: android
-          export_preset: Android
+
+      - name: Compile and Package Game APK
+        run: |
+          ./godot --headless --export-release "Android" ./MASK_Game.apk
+
       - name: Save APK Artifact
         uses: actions/upload-artifact@v4
         with:
